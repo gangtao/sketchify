@@ -1,9 +1,10 @@
 const path = require('path');
 
-module.exports = {
+const config = {
+    mode: 'production',
     entry: './src/index.js',
     output: {
-        filename: 'sketchify.js',
+        filename: 'sketchify.min.js',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
@@ -13,6 +14,15 @@ module.exports = {
                 'style-loader',
                 'css-loader',
             ],
-        }]
+        }],
     }
+};
+
+module.exports = (env, argv) => {
+
+  if (argv.mode === 'development') {
+    config.output.filename = 'sketchify.js';
+  }
+
+  return config;
 };

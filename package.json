@@ -9,7 +9,10 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "build-dev": "webpack --mode=development",
+    "lint": "./node_modules/.bin/eslint ./src/index.js",
+    "formatter": "node ./node_modules/prettier/bin-prettier.js  --write ./src/*.js"
   },
   "dependencies": {
     "jquery": "^3.4.1",
@@ -17,7 +20,11 @@
   },
   "devDependencies": {
     "css-loader": "^3.2.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "file-loader": "^4.2.0",
+    "prettier": "1.19.1",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
