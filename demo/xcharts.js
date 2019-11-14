@@ -45,7 +45,7 @@ function drawChart() {
         data: [60, 50, 40, 30, 20, 10],
         formatter: function(name, value) {
           var htmlStr = "";
-          htmlStr += "<div>" + name + "：" + value + "Score </div>";
+          htmlStr += "<div>" + name + ":" + value + "Score </div>";
           return htmlStr;
         }
       }
@@ -58,7 +58,7 @@ $(function() {
   drawChart();
 
   const svg = $("svg")[0];
-  const handler = Sketchifier(svg);
+  const handler = Sketchifier(svg, {chartType: 'xcharts'});
 
   $("#handifyChecker").change(function() {
     if (this.checked) {

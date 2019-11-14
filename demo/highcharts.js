@@ -70,7 +70,7 @@ $(function() {
   drawChart();
 
   const svg = $("svg")[0];
-  const handler = Sketchifier(svg);
+  const handler = Sketchifier(svg, {chartType: 'highcharts'});
 
   $("#handifyChecker").change(function() {
     if (this.checked) {

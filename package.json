@@ -1,16 +1,24 @@
 {
   "name": "sketchify",
   "version": "0.0.1",
-  "description": "turn svg graph into sketchy visualization",
-  "main": "index.js",
+  "description": "a js tool turns svg graph into sketchy visualization",
+  "private": true,
+  "main": "./src/index.js",
   "repository": "git@github.com:gangtao/sketchify.git",
   "author": "gang.tao@outlook.com",
   "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
   "dependencies": {
     "jquery": "^3.4.1",
     "roughjs": "^3.1.0"
   },
   "devDependencies": {
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   }
