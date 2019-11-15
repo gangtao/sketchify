@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "webpack --mode=production",
     "build-dev": "webpack --mode=development",
     "lint": "./node_modules/.bin/eslint ./src/index.js",
     "formatter": "node ./node_modules/prettier/bin-prettier.js  --write ./src/*.js"

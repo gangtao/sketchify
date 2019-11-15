@@ -60,6 +60,26 @@ function Sketchifier(svg, option) {
     parent.appendChild(node);
   }
 
+  function handifyCircle(el) {
+    $(el).hide();
+    hiddenEl.push($(el));
+    const parent = $(el).parent()[0];
+    const cx = parseInt($(el).attr('cx'),10);
+    const cy = parseInt($(el).attr('cy'),10);
+    const r = parseInt($(el).attr('r'),10);
+    const fill = $(el).attr('fill');
+    const stroke = $(el).attr('stroke');
+    const node = rc.circle(cx,cy,r, {
+      fill,
+      stroke,
+      fillStyle: myOption.fillStyle,
+      roughness: myOption.roughness,
+      bowing: myOption.bowing,
+    });
+    $(node).addClass('handy');
+    parent.appendChild(node);
+  }
+
   function handifyPath(el) {
     $(el).hide();
     hiddenEl.push($(el));
@@ -81,7 +101,7 @@ function Sketchifier(svg, option) {
   }
 
   function handify(el) {
-    const tag = $(el).prop('tagName');
+    const tag = $(el).prop('tagName').toLowerCase();
 
     if (shouldFilter(el, blacklist)) {
       return;
@@ -93,14 +113,17 @@ function Sketchifier(svg, option) {
         $(el)
           .children()
           .each(function () {
-            handify($(this)[0], rc);
+            handify($(this)[0]);
           });
         break;
       case 'rect':
-        handifyRect(el, rc);
+        handifyRect(el);
         break;
+      case 'circle':
+        console.log('find circiles');
+        handifyCircle(el);
       case 'path':
-        handifyPath(el, rc);
+        handifyPath(el);
         break;
       case 'text':
         $(el).addClass('sk-text');
