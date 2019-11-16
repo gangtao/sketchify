@@ -30,9 +30,11 @@ function Sketchifier(svg, option) {
   };
 
   const mySvg = svg;
-  const myOption = { ...defaultOptions,
-    ...option
+  const myOption = {
+    ...defaultOptions,
+    ...option,
   };
+
   const rc = rough.svg(svg);
   const hiddenEl = []; // save the state for all hidden elements
   const chartConfig = chartConfigs[myOption.chartType];
@@ -41,14 +43,13 @@ function Sketchifier(svg, option) {
   function getAttrValue(el, attr, defaultValue = 0.0) {
     if ($(el).attr(attr)) {
       return parseFloat($(el).attr(attr));
-    } else if ($(el).css(attr)) {
+    } if ($(el).css(attr)) {
       return parseFloat($(el).css(attr));
-    } else {
-      return defaultValue;
     }
+    return defaultValue;
   }
 
-  function getStyleAttrValue(el, attr, ) {
+  function getStyleAttrValue(el, attr) {
     return $(el).attr(attr) ? $(el).attr(attr) : $(el).css(attr);
   }
 
@@ -72,6 +73,9 @@ function Sketchifier(svg, option) {
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
+    if (myOption.fillStyle === 'solid') {
+      $(node).children().css('fill', fill);
+    }
     parent.appendChild(node);
   }
 
@@ -82,7 +86,7 @@ function Sketchifier(svg, option) {
     const cx = getAttrValue(el, 'cx');
     const cy = getAttrValue(el, 'cy');
     const r = getAttrValue(el, 'r');
-    const rr = r ? r : parseFloat(getStyleAttrValue(el, 'r'));
+    const rr = r || parseFloat(getStyleAttrValue(el, 'r'));
     const fill = getStyleAttrValue(el, 'fill');
     const stroke = getStyleAttrValue(el, 'stroke');
     const opacity = getAttrValue(el, 'opacity', 1.0);
@@ -95,6 +99,9 @@ function Sketchifier(svg, option) {
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
+    if (myOption.fillStyle === 'solid') {
+      $(node).children().css('fill', fill);
+    }
     parent.appendChild(node);
   }
 
@@ -118,6 +125,9 @@ function Sketchifier(svg, option) {
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
+    if (myOption.fillStyle === 'solid') {
+      $(node).children().css('fill', fill);
+    }
     parent.appendChild(node);
   }
 
@@ -141,6 +151,9 @@ function Sketchifier(svg, option) {
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
+    if (myOption.fillStyle === 'solid') {
+      $(node).children().css('fill', fill);
+    }
     parent.appendChild(node);
   }
 
@@ -150,12 +163,10 @@ function Sketchifier(svg, option) {
     const parent = $(el).parent()[0];
     const points = $(el).attr('points');
     if (points) {
-      const pointsArray = points.split(/(\s+)/).filter(function(e) {
-        return e.trim().length > 0;
-      });
-      const pointsPairArray = pointsArray.map(function(p) {
-        const points = p.split(',');
-        return [parseFloat(points[0]), parseFloat(points[1])];
+      const pointsArray = points.split(/(\s+)/).filter((e) => e.trim().length > 0);
+      const pointsPairArray = pointsArray.map((p) => {
+        const po = p.split(',');
+        return [parseFloat(po[0]), parseFloat(po[1])];
       });
       const fill = getStyleAttrValue(el, 'fill');
       const stroke = getStyleAttrValue(el, 'stroke');
@@ -168,7 +179,10 @@ function Sketchifier(svg, option) {
         bowing: myOption.bowing,
       });
       $(node).addClass('handy');
-      $(node).attr('opacity', opacity || fillOpacity);
+      $(node).attr('opacity', opacity);
+      if (myOption.fillStyle === 'solid') {
+        $(node).children().css('fill', fill);
+      }
       parent.appendChild(node);
     }
   }
@@ -190,6 +204,9 @@ function Sketchifier(svg, option) {
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
+    if (myOption.fillStyle === 'solid') {
+      $(node).children().css('fill', fill);
+    }
     parent.appendChild(node);
   }
 
@@ -205,7 +222,7 @@ function Sketchifier(svg, option) {
       case 'g':
         $(el)
           .children()
-          .each(function() {
+          .each(function () {
             handify($(this)[0]);
           });
         break;

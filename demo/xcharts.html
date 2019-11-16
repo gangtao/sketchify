@@ -16,8 +16,24 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div id="control">
-          <input id="handifyChecker" type="checkbox" name="handify"> handify<br>
+        <div id="control"  style="margin-left: 10px">
+          <label for="handifyChecker">Turn Sketchy:</label>
+          <input id="handifyChecker" type="checkbox" name="handify"><br>
+          <label for="fillStyleSelector">Filling Style:</label>
+          <select id="fillStyleSelector">
+            <option value="hachure">hachure</option>
+            <option value="solid">solid</option>
+            <option value="zigzag">zigzag</option>
+            <option value="cross-hatch">cross-hatch</option>
+            <option value="dots">dots</option>
+            <option value="sunburst">sunburst</option>
+            <option value="dashed">dashed</option>
+            <option value="zigzag-line">zigzag-line</option>
+          </select>
+          <label for="bowingRange">Bowing:</label>
+          <input type="range" min="0" max="10" value="1" class="slider" id="bowingRange">
+          <label for="roughnessRange">Roughness:</label>
+          <input type="range" min="0" max="10" value="1" class="slider" id="roughnessRange">
         </div>
       </div>
       <div class="row">

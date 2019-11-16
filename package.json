@@ -12,6 +12,7 @@
     "build": "webpack --mode=production",
     "build-dev": "webpack --mode=development",
     "lint": "./node_modules/.bin/eslint ./src/index.js",
+    "lint-fix": "./node_modules/.bin/eslint --fix ./src/index.js",
     "formatter": "node ./node_modules/prettier/bin-prettier.js  --write ./src/*.js"
   },
   "dependencies": {

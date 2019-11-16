@@ -1,25 +1,25 @@
 function drawBarChart() {
-  const chart = xCharts(document.querySelector("#container_bar"));
+  const chart = xCharts(document.querySelector('#container_bar'));
   option = {
     title: {
-      text: "Barchart"
+      text: 'Barchart'
     },
     tooltip: {
       show: true,
-      trigger: "axis"
+      trigger: 'axis'
     },
     legend: {
-      x: "center",
-      y: "bottom",
+      x: 'center',
+      y: 'bottom',
       show: true,
-      data: ["Li", "Han"]
+      data: ['Li', 'Han']
     },
     xAxis: [{
-      type: "category",
-      data: ["A", "B", "C", "D", "E", "F"]
+      type: 'category',
+      data: ['A', 'B', 'C', 'D', 'E', 'F']
     }],
     yAxis: [{
-      type: "value",
+      type: 'value',
       maxValue: 100,
       minValue: 0
     }],
@@ -30,16 +30,16 @@ function drawBarChart() {
       enable: true
     },
     series: [{
-      name: "Li",
-      type: "bar",
+      name: 'Li',
+      type: 'bar',
       data: [10, 20, 30, 40, 50, 60]
     }, {
-      name: "Han",
-      type: "bar",
+      name: 'Han',
+      type: 'bar',
       data: [60, 50, 40, 30, 20, 10],
       formatter: function(name, value) {
-        var htmlStr = "";
-        htmlStr += "<div>" + name + ":" + value + "Score </div>";
+        var htmlStr = '';
+        htmlStr += '<div>' + name + ':' + value + 'Score </div>';
         return htmlStr;
       }
     }]
@@ -48,7 +48,7 @@ function drawBarChart() {
 }
 
 function drawScatterChart() {
-  const chart = xCharts(document.querySelector("#container_scatter"));
+  const chart = xCharts(document.querySelector('#container_scatter'));
   option = {
     title: {
       text: 'Scatter'
@@ -116,7 +116,7 @@ function drawScatterChart() {
 }
 
 function drawPieChart() {
-  const chart = xCharts(document.querySelector("#container_pie"));
+  const chart = xCharts(document.querySelector('#container_pie'));
   option = {
     title: {
       text: 'Pie'
@@ -168,7 +168,7 @@ function drawPieChart() {
 }
 
 function drawLineChart() {
-  const chart = xCharts(document.querySelector("#container_line"));
+  const chart = xCharts(document.querySelector('#container_line'));
   option = {
     title: {
       text: 'Area'
@@ -218,7 +218,7 @@ function drawLineChart() {
 }
 
 function drawRadarChart() {
-  const chart = xCharts(document.querySelector("#container_radar"));
+  const chart = xCharts(document.querySelector('#container_radar'));
   option = {
     title: {
       text: 'Radar'
@@ -282,7 +282,7 @@ function drawRadarChart() {
 }
 
 function drawFunnelChart() {
-  const chart = xCharts(document.querySelector("#container_funnel"));
+  const chart = xCharts(document.querySelector('#container_funnel'));
   option = {
     tooltip: {
       trigger: 'item'
@@ -335,48 +335,70 @@ function drawChart() {
   drawFunnelChart();
 }
 
-$(function() {
-  drawChart();
+function getHandlers() {
+  const handlers = [];
+  const option = {
+    chartType: 'xcharts',
+    fillStyle: $('#fillStyleSelector').children('option:selected').val(),
+    bowing: $('#bowingRange').val(),
+    roughness: $('#roughnessRange').val(),
+  };
 
-  var handlers = [];
-
-  const svg_bar = $("#container_bar svg")[0];
-  const handler_bar = Sketchifier(svg_bar, {
-    chartType: 'xcharts'
-  });
+  const svg_bar = $('#container_bar svg')[0];
+  const handler_bar = Sketchifier(svg_bar, option);
   handlers.push(handler_bar);
 
-  const svg_scatter = $("#container_scatter svg")[0];
-  const handler_scatter = Sketchifier(svg_scatter, {
-    chartType: 'xcharts'
-  });
+  const svg_scatter = $('#container_scatter svg')[0];
+  const handler_scatter = Sketchifier(svg_scatter, option);
   handlers.push(handler_scatter);
 
-  const svg_pie = $("#container_pie svg")[0];
-  const handler_pie = Sketchifier(svg_pie, {
-    chartType: 'xcharts'
-  });
+  const svg_pie = $('#container_pie svg')[0];
+  const handler_pie = Sketchifier(svg_pie, option);
   handlers.push(handler_pie);
 
-  const svg_line = $("#container_line svg")[0];
-  const handler_line = Sketchifier(svg_line, {
-    chartType: 'xcharts'
-  });
+  const svg_line = $('#container_line svg')[0];
+  const handler_line = Sketchifier(svg_line, option);
   handlers.push(handler_line);
 
-  const svg_radar = $("#container_radar svg")[0];
-  const handler_radar = Sketchifier(svg_radar, {
-    chartType: 'xcharts'
-  });
+  const svg_radar = $('#container_radar svg')[0];
+  const handler_radar = Sketchifier(svg_radar, option);
   handlers.push(handler_radar);
 
-  const svg_funnel = $("#container_funnel svg")[0];
-  const handler_funnel = Sketchifier(svg_funnel, {
-    chartType: 'xcharts'
-  });
+  const svg_funnel = $('#container_funnel svg')[0];
+  const handler_funnel = Sketchifier(svg_funnel, option);
   handlers.push(handler_funnel);
+  return handlers;
+}
 
-  $("#handifyChecker").change(function() {
+$(function() {
+  drawChart();
+  var handlers = getHandlers();
+
+  function updateHandler(){
+    handlers.forEach(function(handler) {
+      handler.restore();
+    })
+    handlers = getHandlers();
+    if ($('#handifyChecker').prop('checked')) {
+      handlers.forEach(function(handler) {
+        handler.handify();
+      })
+    }
+  }
+
+  $('#fillStyleSelector').change(function() {
+    updateHandler();
+  })
+
+  $('#bowingRange').change(function() {
+    updateHandler();
+  })
+
+  $('#roughnessRange').change(function() {
+    updateHandler();
+  })
+
+  $('#handifyChecker').change(function() {
     if (this.checked) {
       handlers.forEach(function(handler) {
         handler.handify();
