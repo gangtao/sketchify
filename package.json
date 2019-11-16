@@ -1,6 +1,6 @@
 {
   "name": "sketchify",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "a js tool turns svg graph into sketchy visualization",
   "private": true,
   "main": "./src/index.js",
