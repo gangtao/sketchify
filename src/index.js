@@ -30,25 +30,39 @@ function Sketchifier(svg, option) {
   };
 
   const mySvg = svg;
-  const myOption = { ...defaultOptions, ...option };
+  const myOption = { ...defaultOptions,
+    ...option
+  };
   const rc = rough.svg(svg);
   const hiddenEl = []; // save the state for all hidden elements
   const chartConfig = chartConfigs[myOption.chartType];
   const blacklist = chartConfig ? chartConfig.blacklist : [];
 
+  function getAttrValue(el, attr, defaultValue = 0.0) {
+    if ($(el).attr(attr)) {
+      return parseFloat($(el).attr(attr));
+    } else if ($(el).css(attr)) {
+      return parseFloat($(el).css(attr));
+    } else {
+      return defaultValue;
+    }
+  }
+
+  function getStyleAttrValue(el, attr, ) {
+    return $(el).attr(attr) ? $(el).attr(attr) : $(el).css(attr);
+  }
+
   function handifyRect(el) {
     $(el).hide();
     hiddenEl.push($(el));
     const parent = $(el).parent()[0];
-    const x = $(el).attr('x') ? parseInt($(el).attr('x'), 10) : 0;
-    const y = $(el).attr('y') ? parseInt($(el).attr('y'), 10) : 0;
-
-    const width = parseInt($(el).attr('width'), 10);
-    const height = parseInt($(el).attr('height'), 10);
-    const fill = $(el).attr('fill');
-    // const strokeWidth = $(el).attr("stroke-width");
-    const stroke = $(el).attr('stroke');
-    // const opacity = $(el).attr('opacity');
+    const x = getAttrValue(el, 'x');
+    const y = getAttrValue(el, 'y');
+    const width = getAttrValue(el, 'width');
+    const height = getAttrValue(el, 'height');
+    const fill = getStyleAttrValue(el, 'fill');
+    const stroke = getStyleAttrValue(el, 'stroke');
+    const opacity = getAttrValue(el, 'opacity', 1.0);
     const node = rc.rectangle(x, y, width, height, {
       fill,
       stroke,
@@ -57,6 +71,7 @@ function Sketchifier(svg, option) {
       bowing: myOption.bowing,
     });
     $(node).addClass('handy');
+    $(node).attr('opacity', opacity);
     parent.appendChild(node);
   }
 
@@ -64,12 +79,14 @@ function Sketchifier(svg, option) {
     $(el).hide();
     hiddenEl.push($(el));
     const parent = $(el).parent()[0];
-    const cx = parseInt($(el).attr('cx'),10);
-    const cy = parseInt($(el).attr('cy'),10);
-    const r = parseInt($(el).attr('r'),10);
-    const fill = $(el).attr('fill');
-    const stroke = $(el).attr('stroke');
-    const node = rc.circle(cx,cy,r, {
+    const cx = getAttrValue(el, 'cx');
+    const cy = getAttrValue(el, 'cy');
+    const r = getAttrValue(el, 'r');
+    const rr = r ? r : parseFloat(getStyleAttrValue(el, 'r'));
+    const fill = getStyleAttrValue(el, 'fill');
+    const stroke = getStyleAttrValue(el, 'stroke');
+    const opacity = getAttrValue(el, 'opacity', 1.0);
+    const node = rc.circle(cx, cy, rr * 2, {
       fill,
       stroke,
       fillStyle: myOption.fillStyle,
@@ -77,7 +94,83 @@ function Sketchifier(svg, option) {
       bowing: myOption.bowing,
     });
     $(node).addClass('handy');
+    $(node).attr('opacity', opacity);
     parent.appendChild(node);
+  }
+
+  function handifyLine(el) {
+    $(el).hide();
+    hiddenEl.push($(el));
+    const parent = $(el).parent()[0];
+    const x1 = getAttrValue(el, 'x1');
+    const x2 = getAttrValue(el, 'x2');
+    const y1 = getAttrValue(el, 'y1');
+    const y2 = getAttrValue(el, 'y2');
+    const fill = getStyleAttrValue(el, 'fill');
+    const stroke = getStyleAttrValue(el, 'stroke');
+    const opacity = getAttrValue(el, 'opacity', 1.0);
+    const node = rc.line(x1, y1, x2, y2, {
+      fill,
+      stroke,
+      fillStyle: myOption.fillStyle,
+      roughness: myOption.roughness,
+      bowing: myOption.bowing,
+    });
+    $(node).addClass('handy');
+    $(node).attr('opacity', opacity);
+    parent.appendChild(node);
+  }
+
+  function handifyEllipse(el) {
+    $(el).hide();
+    hiddenEl.push($(el));
+    const parent = $(el).parent()[0];
+    const cx = getAttrValue(el, 'cx');
+    const cy = getAttrValue(el, 'cy');
+    const rx = getAttrValue(el, 'rx');
+    const ry = getAttrValue(el, 'ry');
+    const fill = getStyleAttrValue(el, 'fill');
+    const stroke = getStyleAttrValue(el, 'stroke');
+    const opacity = getAttrValue(el, 'opacity', 1.0);
+    const node = rc.ellipse(cx, cy, rx * 2, ry * 2, {
+      fill,
+      stroke,
+      fillStyle: myOption.fillStyle,
+      roughness: myOption.roughness,
+      bowing: myOption.bowing,
+    });
+    $(node).addClass('handy');
+    $(node).attr('opacity', opacity);
+    parent.appendChild(node);
+  }
+
+  function handifyPolygon(el) {
+    $(el).hide();
+    hiddenEl.push($(el));
+    const parent = $(el).parent()[0];
+    const points = $(el).attr('points');
+    if (points) {
+      const pointsArray = points.split(/(\s+)/).filter(function(e) {
+        return e.trim().length > 0;
+      });
+      const pointsPairArray = pointsArray.map(function(p) {
+        const points = p.split(',');
+        return [parseFloat(points[0]), parseFloat(points[1])];
+      });
+      const fill = getStyleAttrValue(el, 'fill');
+      const stroke = getStyleAttrValue(el, 'stroke');
+      const opacity = getAttrValue(el, 'opacity', 1.0);
+      const node = rc.polygon(pointsPairArray, {
+        fill,
+        stroke,
+        fillStyle: myOption.fillStyle,
+        roughness: myOption.roughness,
+        bowing: myOption.bowing,
+      });
+      $(node).addClass('handy');
+      $(node).attr('opacity', opacity || fillOpacity);
+      parent.appendChild(node);
+    }
   }
 
   function handifyPath(el) {
@@ -85,10 +178,9 @@ function Sketchifier(svg, option) {
     hiddenEl.push($(el));
     const parent = $(el).parent()[0];
     const d = $(el).attr('d');
-    const fill = $(el).attr('fill');
-    // const strokeWidth = $(el).attr("stroke-width");
-    const stroke = $(el).attr('stroke');
-    // const opacity = $(el).attr('opacity');
+    const fill = getStyleAttrValue(el, 'fill');
+    const stroke = getStyleAttrValue(el, 'stroke');
+    const opacity = getAttrValue(el, 'opacity', 1.0);
     const node = rc.path(d, {
       fill,
       stroke,
@@ -97,6 +189,7 @@ function Sketchifier(svg, option) {
       bowing: myOption.bowing,
     });
     $(node).addClass('handy');
+    $(node).attr('opacity', opacity);
     parent.appendChild(node);
   }
 
@@ -112,7 +205,7 @@ function Sketchifier(svg, option) {
       case 'g':
         $(el)
           .children()
-          .each(function () {
+          .each(function() {
             handify($(this)[0]);
           });
         break;
@@ -120,8 +213,17 @@ function Sketchifier(svg, option) {
         handifyRect(el);
         break;
       case 'circle':
-        console.log('find circiles');
         handifyCircle(el);
+        break;
+      case 'line':
+        handifyLine(el);
+        break;
+      case 'ellipse':
+        handifyEllipse(el);
+        break;
+      case 'polygon':
+        handifyPolygon(el);
+        break;
       case 'path':
         handifyPath(el);
         break;

@@ -3,6 +3,7 @@
   <head>
     <title>sketchify</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xgfe/xCharts/dist/xCharts.css">
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/roughjs/dist/rough.js"></script>
@@ -13,12 +14,20 @@
     
   </head>
   <body>
-    <div class="container">
-      <div id="control">
-        <input id="handifyChecker" type="checkbox" name="handify"> handify<br>
+    <div class="container-fluid">
+      <div class="row">
+        <div id="control">
+          <input id="handifyChecker" type="checkbox" name="handify"> handify<br>
+        </div>
       </div>
-      <div id="container_bar" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-      <div id="container_scatter" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <div class="row">
+        <div id="container_bar" class="col-md-4" style="height: 300px;"></div>
+        <div id="container_scatter" class="col-md-4" style="height: 300px;"></div>
+        <div id="container_pie" class="col-md-4" style="height: 300px"></div>
+        <div id="container_line" class="col-md-4" style="height: 300px"></div>
+        <div id="container_radar" class="col-md-4" style="height: 300px"></div>
+        <div id="container_funnel" class="col-md-4" style="height: 300px"></div>
+      </div>
     </div>
   </body>
 </html>

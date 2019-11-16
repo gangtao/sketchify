@@ -81,7 +81,7 @@ function drawScatterChart() {
     series: [{
       name: 'Female',
       type: 'scatter',
-      size: 50,
+      size: 30,
       data: [
         [161.2, 51.6],
         [167.5, 59.0],
@@ -97,7 +97,7 @@ function drawScatterChart() {
     }, {
       name: 'Male',
       type: 'scatter',
-      size: 50,
+      size: 30,
       data: [
         [174.0, 65.6],
         [175.3, 71.8],
@@ -115,9 +115,224 @@ function drawScatterChart() {
   chart.loadConfig(option);
 }
 
+function drawPieChart() {
+  const chart = xCharts(document.querySelector("#container_pie"));
+  option = {
+    title: {
+      text: 'Pie'
+    },
+    tooltip: {
+      show: true
+    },
+    legend: {
+      orient: 'vertical',
+      x: 'right',
+      show: true,
+      data: ['section1', 'section2', 'section3', 'section4', 'section5', 'section6']
+    },
+    resize: {
+      enable: true
+    },
+    animation: {
+      enable: true
+    },
+    series: [{
+      type: 'pie',
+      center: ['50%', '50%'],
+      radius: {
+        outerRadius: '30%',
+        innerRadius: 0
+      },
+      data: [{
+        name: 'section1',
+        value: 10
+      }, {
+        name: 'section2',
+        value: 20
+      }, {
+        name: 'section3',
+        value: 30
+      }, {
+        name: 'section4',
+        value: 40
+      }, {
+        name: 'section5',
+        value: 50
+      }, {
+        name: 'section6',
+        value: 60
+      }]
+    }]
+  };
+  chart.loadConfig(option);
+}
+
+function drawLineChart() {
+  const chart = xCharts(document.querySelector("#container_line"));
+  option = {
+    title: {
+      text: 'Area'
+    },
+    legend: {
+      data: ['Apple', 'Orange'],
+      x: 'center'
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    xAxis: [{
+      type: 'category',
+      data: ['1', '2', '3', '4', '5', '6', '7'],
+      tickFormat: function(data) {
+        return 'week' + data;
+      }
+    }],
+    yAxis: [{
+      type: 'value'
+    }],
+    resize: {
+      enable: true
+    },
+    animation: {
+      enable: true
+    },
+    series: [{
+      type: 'line',
+      name: 'Apple',
+      data: [100, 200, 300, 300, 350, 400, 450],
+      areaStyle: {
+        show: true
+      },
+      stack: 'sales'
+    }, {
+      type: 'line',
+      name: 'Orange',
+      data: [500, 400, 200, 200, 150, 200, 250],
+      areaStyle: {
+        show: true
+      },
+      stack: 'sales'
+    }]
+  };
+  chart.loadConfig(option);
+}
+
+function drawRadarChart() {
+  const chart = xCharts(document.querySelector("#container_radar"));
+  option = {
+    title: {
+      text: 'Radar'
+    },
+    tooltip: {
+      show: true
+    },
+    legend: {
+      orient: 'vertical',
+      x: 'right',
+      show: true,
+      data: ['Li', 'Han']
+    },
+    resize: {
+      enable: true
+    },
+    animation: {
+      enable: true
+    },
+    series: [{
+      type: 'radar',
+      levels: 4,
+      radius: '25%',
+      fill: false,
+      center: ['50%', '50%'],
+      indicator: [{
+        text: 'A',
+        max: 100,
+        min: 0
+      }, {
+        text: 'B',
+        max: 100,
+        min: 0
+      }, {
+        text: 'C',
+        max: 100,
+        min: 0
+      }, {
+        text: 'D',
+        max: 100,
+        min: 0
+      }, {
+        text: 'E',
+        max: 100,
+        min: 0
+      }, {
+        text: 'F',
+        max: 100,
+        min: 0
+      }],
+      data: [{
+        name: 'Li',
+        value: [10, 20, 30, 40, 50, 60]
+      }, {
+        name: 'Han',
+        value: [80, 70, 60, 50, 40, 30]
+      }]
+    }]
+  };
+  chart.loadConfig(option);
+}
+
+function drawFunnelChart() {
+  const chart = xCharts(document.querySelector("#container_funnel"));
+  option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      show: true,
+      data: ['A', 'B', 'C', 'D', 'E'],
+      x: 'center'
+    },
+    title: {
+      text: 'Funnel'
+    },
+    resize: {
+      enable: true
+    },
+    animation: {
+      enable: true
+    },
+    series: [{
+      name: 'sample',
+      size: ['50%', '70%'],
+      type: 'funnel',
+      data: [{
+        name: 'A',
+        value: '80'
+      }, {
+        name: 'B',
+        value: '100'
+      }, {
+        name: 'C',
+        value: '60'
+      }, {
+        name: 'D',
+        value: '40'
+      }, {
+        name: 'E',
+        value: '20'
+      }, ]
+    }]
+  };
+  chart.loadConfig(option);
+}
+
 function drawChart() {
   drawBarChart();
   drawScatterChart();
+  drawPieChart();
+  drawLineChart();
+  drawRadarChart();
+  drawFunnelChart();
 }
 
 $(function() {
@@ -129,21 +344,45 @@ $(function() {
   const handler_bar = Sketchifier(svg_bar, {
     chartType: 'xcharts'
   });
-  handlers.push(handler_bar)
+  handlers.push(handler_bar);
 
   const svg_scatter = $("#container_scatter svg")[0];
   const handler_scatter = Sketchifier(svg_scatter, {
     chartType: 'xcharts'
   });
-  handlers.push(handler_scatter)
+  handlers.push(handler_scatter);
+
+  const svg_pie = $("#container_pie svg")[0];
+  const handler_pie = Sketchifier(svg_pie, {
+    chartType: 'xcharts'
+  });
+  handlers.push(handler_pie);
+
+  const svg_line = $("#container_line svg")[0];
+  const handler_line = Sketchifier(svg_line, {
+    chartType: 'xcharts'
+  });
+  handlers.push(handler_line);
+
+  const svg_radar = $("#container_radar svg")[0];
+  const handler_radar = Sketchifier(svg_radar, {
+    chartType: 'xcharts'
+  });
+  handlers.push(handler_radar);
+
+  const svg_funnel = $("#container_funnel svg")[0];
+  const handler_funnel = Sketchifier(svg_funnel, {
+    chartType: 'xcharts'
+  });
+  handlers.push(handler_funnel);
 
   $("#handifyChecker").change(function() {
     if (this.checked) {
-      handlers.forEach(function(handler){
+      handlers.forEach(function(handler) {
         handler.handify();
       })
     } else {
-      handlers.forEach(function(handler){
+      handlers.forEach(function(handler) {
         handler.restore();
       })
     }
