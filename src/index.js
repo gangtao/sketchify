@@ -21,11 +21,30 @@ function shouldFilter(el, blacklist) {
   return false;
 }
 
-function Sketchifier(svg, option) {
+function Sketchifier(root, option) {
+  const svgList = $(root).find('svg');
+  const handlers = [];
+  svgList.each(function(index) {
+    const el = $(this)[0];
+    handlers.push(SVGSketchifier(el, option));
+  })
+
+  return {
+    handify() {
+      handlers.forEach(h => h.handify());
+    },
+    restore() {
+      handlers.forEach(h => h.restore());
+    },
+  };
+}
+
+function SVGSketchifier(svg, option) {
   const defaultOptions = {
     fillStyle: 'hachure',
     roughness: 1,
     bowing: 1,
+    strokeWidth: 1,
     chartType: '',
   };
 
@@ -43,7 +62,8 @@ function Sketchifier(svg, option) {
   function getAttrValue(el, attr, defaultValue = 0.0) {
     if ($(el).attr(attr)) {
       return parseFloat($(el).attr(attr));
-    } if ($(el).css(attr)) {
+    }
+    if ($(el).css(attr)) {
       return parseFloat($(el).css(attr));
     }
     return defaultValue;
@@ -70,11 +90,15 @@ function Sketchifier(svg, option) {
       fillStyle: myOption.fillStyle,
       roughness: myOption.roughness,
       bowing: myOption.bowing,
+      strokeWidth: myOption.strokeWidth
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
     if (myOption.fillStyle === 'solid') {
       $(node).children().css('fill', fill);
+    }
+    if ($(el).attr('transform')) {
+      $(node).attr('transform', $(el).attr('transform'));
     }
     parent.appendChild(node);
   }
@@ -96,11 +120,15 @@ function Sketchifier(svg, option) {
       fillStyle: myOption.fillStyle,
       roughness: myOption.roughness,
       bowing: myOption.bowing,
+      strokeWidth: myOption.strokeWidth
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
     if (myOption.fillStyle === 'solid') {
       $(node).children().css('fill', fill);
+    }
+    if ($(el).attr('transform')) {
+      $(node).attr('transform', $(el).attr('transform'));
     }
     parent.appendChild(node);
   }
@@ -122,11 +150,15 @@ function Sketchifier(svg, option) {
       fillStyle: myOption.fillStyle,
       roughness: myOption.roughness,
       bowing: myOption.bowing,
+      strokeWidth: myOption.strokeWidth
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
     if (myOption.fillStyle === 'solid') {
       $(node).children().css('fill', fill);
+    }
+    if ($(el).attr('transform')) {
+      $(node).attr('transform', $(el).attr('transform'));
     }
     parent.appendChild(node);
   }
@@ -148,11 +180,15 @@ function Sketchifier(svg, option) {
       fillStyle: myOption.fillStyle,
       roughness: myOption.roughness,
       bowing: myOption.bowing,
+      strokeWidth: myOption.strokeWidth,
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
     if (myOption.fillStyle === 'solid') {
       $(node).children().css('fill', fill);
+    }
+    if ($(el).attr('transform')) {
+      $(node).attr('transform', $(el).attr('transform'));
     }
     parent.appendChild(node);
   }
@@ -177,11 +213,15 @@ function Sketchifier(svg, option) {
         fillStyle: myOption.fillStyle,
         roughness: myOption.roughness,
         bowing: myOption.bowing,
+        strokeWidth: myOption.strokeWidth,
       });
       $(node).addClass('handy');
       $(node).attr('opacity', opacity);
       if (myOption.fillStyle === 'solid') {
         $(node).children().css('fill', fill);
+      }
+      if ($(el).attr('transform')) {
+        $(node).attr('transform', $(el).attr('transform'));
       }
       parent.appendChild(node);
     }
@@ -201,11 +241,15 @@ function Sketchifier(svg, option) {
       fillStyle: myOption.fillStyle,
       roughness: myOption.roughness,
       bowing: myOption.bowing,
+      strokeWidth: myOption.strokeWidth,
     });
     $(node).addClass('handy');
     $(node).attr('opacity', opacity);
     if (myOption.fillStyle === 'solid') {
       $(node).children().css('fill', fill);
+    }
+    if ($(el).attr('transform')) {
+      $(node).attr('transform', $(el).attr('transform'));
     }
     parent.appendChild(node);
   }
@@ -222,7 +266,7 @@ function Sketchifier(svg, option) {
       case 'g':
         $(el)
           .children()
-          .each(function () {
+          .each(function() {
             handify($(this)[0]);
           });
         break;

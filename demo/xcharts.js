@@ -335,54 +335,27 @@ function drawChart() {
   drawFunnelChart();
 }
 
-function getHandlers() {
-  const handlers = [];
+function getHandler() {
   const option = {
     chartType: 'xcharts',
     fillStyle: $('#fillStyleSelector').children('option:selected').val(),
     bowing: $('#bowingRange').val(),
-    roughness: $('#roughnessRange').val(),
+    roughness: $('#roughnessRange').val()
   };
 
-  const svg_bar = $('#container_bar svg')[0];
-  const handler_bar = Sketchifier(svg_bar, option);
-  handlers.push(handler_bar);
-
-  const svg_scatter = $('#container_scatter svg')[0];
-  const handler_scatter = Sketchifier(svg_scatter, option);
-  handlers.push(handler_scatter);
-
-  const svg_pie = $('#container_pie svg')[0];
-  const handler_pie = Sketchifier(svg_pie, option);
-  handlers.push(handler_pie);
-
-  const svg_line = $('#container_line svg')[0];
-  const handler_line = Sketchifier(svg_line, option);
-  handlers.push(handler_line);
-
-  const svg_radar = $('#container_radar svg')[0];
-  const handler_radar = Sketchifier(svg_radar, option);
-  handlers.push(handler_radar);
-
-  const svg_funnel = $('#container_funnel svg')[0];
-  const handler_funnel = Sketchifier(svg_funnel, option);
-  handlers.push(handler_funnel);
-  return handlers;
+  const container = $('#charts')[0];
+  return handler = Sketchifier(container, option);
 }
 
 $(function() {
   drawChart();
-  var handlers = getHandlers();
+  var handler = getHandler();
 
-  function updateHandler(){
-    handlers.forEach(function(handler) {
-      handler.restore();
-    })
-    handlers = getHandlers();
+  function updateHandler() {
+    handler.restore();
+    handler = getHandler();
     if ($('#handifyChecker').prop('checked')) {
-      handlers.forEach(function(handler) {
-        handler.handify();
-      })
+      handler.handify();
     }
   }
 
@@ -400,13 +373,9 @@ $(function() {
 
   $('#handifyChecker').change(function() {
     if (this.checked) {
-      handlers.forEach(function(handler) {
-        handler.handify();
-      })
+      handler.handify();
     } else {
-      handlers.forEach(function(handler) {
-        handler.restore();
-      })
+      handler.restore();
     }
   });
 });
