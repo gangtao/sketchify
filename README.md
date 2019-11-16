@@ -29,9 +29,17 @@ Refer to [roughjs api document](https://github.com/pshihn/rough/wiki) for option
 
 ![](./docs/highcharts_demo.png)
 
-There are 3 demo charts types, [highcharts](https://www.highcharts.com/), [amcharts](https://www.amcharts.com/) and [xCharts](http://xgfe.github.io/xCharts/).
+There are 3 demo charts types:
+- [highcharts](https://www.highcharts.com/)
+- [amcharts](https://www.amcharts.com/)
+- [xCharts](http://xgfe.github.io/xCharts/)
 
 After `npm run build-dev`, open related html file in `demo` folder will show you the demo.
+
+Or you can refer to following codepen pages:
+- [highcharts](https://codepen.io/gangtao/full/eYYrpBX)
+- [amcharts](https://codepen.io/gangtao/full/PooxBpV)
+- [xCharts](https://codepen.io/gangtao/full/PooxBWV)
 
 
 # new chart type support
