@@ -485,19 +485,19 @@ function drawFunnelChart() {
         DataView = _DataSet.DataView;
 
     var data = [{
-        action: '浏览网站',
+        action: 'A',
         pv: 50000
     }, {
-        action: '放入购物车',
+        action: 'B',
         pv: 35000
     }, {
-        action: '生成订单',
+        action: 'C',
         pv: 25000
     }, {
-        action: '支付订单',
+        action: 'D',
         pv: 15000
     }, {
-        action: '完成交易',
+        action: 'E',
         pv: 8000
     }];
     var dv = new DataView().source(data);
