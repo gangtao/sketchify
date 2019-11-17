@@ -39,7 +39,9 @@ Refer to [roughjs api document](https://github.com/pshihn/rough/wiki) for option
 
 ![](./docs/highcharts_demo.png)
 
-There are 3 demo charts types:
+There are 5 demo charts types:
+- [ECharts](https://echarts.apache.org/zh/index.html)
+- [AntV G2](https://antv.alipay.com/zh-cn/g2/3.x/index.html)
 - [highcharts](https://www.highcharts.com/)
 - [amcharts](https://www.amcharts.com/)
 - [xCharts](http://xgfe.github.io/xCharts/)
@@ -47,6 +49,8 @@ There are 3 demo charts types:
 After `npm run build-dev`, open related html file in `demo` folder will show you the demo.
 
 Or you can refer to following codepen pages:
+- [ECharts](https://codepen.io/gangtao/full/ZEEVzpw)
+- [AntV G2](https://codepen.io/gangtao/full/wvvRwzp)
 - [highcharts](https://codepen.io/gangtao/full/eYYrpBX)
 - [amcharts](https://codepen.io/gangtao/full/PooxBpV)
 - [xCharts](https://codepen.io/gangtao/full/PooxBWV)
