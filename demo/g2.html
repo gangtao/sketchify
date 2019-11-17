@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <title>sketchify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/roughjs/dist/rough.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g2/3.4.10/dist/g2.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
+    <script src="../dist/sketchify.js"></script>
+    <script src="./g2.js"></script>
+    
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div id="control"  style="margin-left: 10px">
+          <label for="handifyChecker">Turn Sketchy:</label>
+          <input id="handifyChecker" type="checkbox" name="handify"><br>
+          <label for="fillStyleSelector">Filling Style:</label>
+          <select id="fillStyleSelector">
+            <option value="hachure">hachure</option>
+            <option value="solid">solid</option>
+            <option value="zigzag">zigzag</option>
+            <option value="cross-hatch">cross-hatch</option>
+            <option value="dots">dots</option>
+            <option value="sunburst">sunburst</option>
+            <option value="dashed">dashed</option>
+            <option value="zigzag-line">zigzag-line</option>
+          </select>
+          <label for="bowingRange">Bowing:</label>
+          <input type="range" min="0" max="10" value="1" class="slider" id="bowingRange">
+          <label for="roughnessRange">Roughness:</label>
+          <input type="range" min="0" max="10" value="1" class="slider" id="roughnessRange">
+        </div>
+      </div>
+      <div id="charts" class="row">
+        <div id="container_bar" class="col-md-4" style="height: 300px;"></div>
+        <div id="container_scatter" class="col-md-4" style="height: 300px;"></div>
+        <div id="container_pie" class="col-md-4" style="height: 300px"></div>
+        <div id="container_line" class="col-md-4" style="height: 300px"></div>
+        <div id="container_radar" class="col-md-4" style="height: 300px"></div>
+        <div id="container_funnel" class="col-md-4" style="height: 300px"></div>
+      </div>
+    </div>
+  </body>
+</html>
