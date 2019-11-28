@@ -19,6 +19,13 @@ npm run build
 
 ### Usage
 To turn an existing graph that composed by svg into sketch mode.  Run following code:
+Adding dependencies to your html:
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rough.js/3.1.0/rough.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/gangtao/sketchify/dist/sketchify.min.js"></script>
+```
+
 ```javascript
 const option = {
     fillStyle: 'hachure',
