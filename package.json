@@ -16,7 +16,7 @@
     "formatter": "node ./node_modules/prettier/bin-prettier.js  --write ./src/*.js"
   },
   "dependencies": {
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "roughjs": "^3.1.0"
   },
   "devDependencies": {
